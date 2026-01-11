@@ -65,7 +65,49 @@
                 apiCall()
             }
             else{
-
+                var response = localStorage.getItem("allRecipes")
+                for (j = 0; j < response.length; j++) {
+                    document.getElementById("mainDiv").innerHTML = document.getElementById("mainDiv").innerHTML + `
+                    <div class="card" style="width: 18rem">
+                        <img
+                        src=${response[j].thumbnail}
+                        class="card-img-top"
+                        alt="..."
+                        />
+                        <div class="card-body">
+                            <h5 class="card-title">${response[j].mealName}</h5>
+                            <p class="card-text">
+                            Category - ${response[j].category} <br>
+                            Area - ${response[j].area}
+                            </p>
+                            <a
+                                href="#"
+                                class="btn btn-warning"
+                                data-bs-toggle="modal"
+                                data-bs-target="#${response[j].id}"
+                                >View Recipe Details</a>
+                        </div>
+                    </div>`
+                    document.body.innerHTML = document.body.innerHTML + `
+                    <div class="modal modal-xl fade" id=${response[j].id} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Recipe</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Instructions- <br>
+                                ${response[j].instructions}
+                                <br><br>
+                                <a href=${response[j].youtubeVideo} target = "_blank" class="btn btn-danger">View Recipe
+                                Video</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                }
             }
             // fetch()->(big box of data promise)resolve(.then)->)(real data promise)resolve(.then)
             async function apiCall() {
@@ -127,6 +169,15 @@
                             "instructions" : response.meals[j].strInstructions,
                             "youtubeVideo" : response.meals[j].strYoutube
                         }
+
+                        var storedArr = [[]]
+                        if(localStorage.getItem("allRecipes")!=null){
+                            storedArr = JSON.parse(localStorage.getItem("allRecipes"))
+                        }
+
+                        storedArr[i][j]= obj
+                        localStorage.setItem("allRecipes",JSON.stringify(storedArr))
+                        
                     }
                 }
             }
