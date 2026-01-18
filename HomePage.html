@@ -1,31 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-bs-theme="dark">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
     <style>
-        body {
-            margin: 20px;
-            margin-top: 100px;
-            margin-bottom: 100px;
-        }
+      body {
+        margin: 20px;
+        margin-top: 100px;
+        margin-bottom: 100px;
+      }
 
-        #mainDiv {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            row-gap: 100px;
-            place-items: center;
-        }
+      #mainDiv {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 100px;
+        place-items: center;
+      }
     </style>
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="mainDiv">
-        <!-- <div class="card" style="width: 18rem">
+      <!-- <div class="card" style="width: 18rem">
             <img src="https://4kwallpapers.com/images/walls/thumbs_3t/24890.jpg" class="card-img-top" alt="..." />
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
@@ -37,59 +40,76 @@
                     Details</a>
             </div>
         </div> -->
-        
     </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Recipe</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">...</div>
-                    <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                    </div>
-                </div>
-            </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Recipe</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">...</div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          </div>
         </div>
+      </div>
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-            crossorigin="anonymous"></script>
-        <script>
-            if(localStorage.getItem("allRecipes")==null){
-                apiCall()
-            }
-            else{
-                var response = localStorage.getItem("allRecipes")
-                for (j = 0; j < response.length; j++) {
-                    document.getElementById("mainDiv").innerHTML = document.getElementById("mainDiv").innerHTML + `
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      if (localStorage.getItem("allRecipes") == null) {
+        apiCall();
+      } else {
+        var response = JSON.parse(localStorage.getItem("allRecipes"));
+        for (j = 0; j < response.length; j++) {
+          if (response[j] != null) {
+            for (k = 0; k < response[j].length; k++) {
+              document.getElementById("mainDiv").innerHTML =
+                document.getElementById("mainDiv").innerHTML +
+                `
                     <div class="card" style="width: 18rem">
                         <img
-                        src=${response[j].thumbnail}
+                        src=${response[j][k].thumbnail}
                         class="card-img-top"
                         alt="..."
                         />
                         <div class="card-body">
-                            <h5 class="card-title">${response[j].mealName}</h5>
+                            <h5 class="card-title">${response[j][k].mealName}</h5>
                             <p class="card-text">
-                            Category - ${response[j].category} <br>
-                            Area - ${response[j].area}
+                            Category - ${response[j][k].category} <br>
+                            Area - ${response[j][k].area}
                             </p>
                             <a
                                 href="#"
                                 class="btn btn-warning"
                                 data-bs-toggle="modal"
-                                data-bs-target="#${response[j].id}"
+                                data-bs-target="#${response[j][k].id}"
                                 >View Recipe Details</a>
                         </div>
-                    </div>`
-                    document.body.innerHTML = document.body.innerHTML + `
-                    <div class="modal modal-xl fade" id=${response[j].id} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>`;
+              document.body.innerHTML =
+                document.body.innerHTML +
+                `
+                    <div class="modal modal-xl fade" id=${response[j][k].id} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -98,29 +118,67 @@
                                 </div>
                                 <div class="modal-body">
                                     Instructions- <br>
-                                ${response[j].instructions}
+                                ${response[j][k].instructions}
                                 <br><br>
-                                <a href=${response[j].youtubeVideo} target = "_blank" class="btn btn-danger">View Recipe
+                                <a href=${response[j][k].youtubeVideo} target = "_blank" class="btn btn-danger">View Recipe
                                 Video</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    `
-                }
+                    `;
             }
-            // fetch()->(big box of data promise)resolve(.then)->)(real data promise)resolve(.then)
-            async function apiCall() {
-                // var alphabetArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-                var alphabetArr = ['a','b']
-                for (i = 0; i < alphabetArr.length; i++) {
-                    var data = await fetch(
-                        "https://www.themealdb.com/api/json/v1/1/search.php?f=" + alphabetArr[i]
-                    );
-                    var response = await data.json();
-                    console.log(response);
-                    for (j = 0; j < response.meals.length; j++) {
-                        document.getElementById("mainDiv").innerHTML = document.getElementById("mainDiv").innerHTML + `
+          }
+        }
+      }
+      // fetch()->(big box of data promise)resolve(.then)->)(real data promise)resolve(.then)
+      async function apiCall() {
+        var alphabetArr = [
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+          "s",
+          "t",
+          "u",
+          "v",
+          "w",
+          "x",
+          "y",
+          "z",
+        ];
+        // var alphabetArr = ['a','b']
+        var mainArr = [];
+        for (i = 0; i < 26; i++) {
+          mainArr.push([]);
+        }
+
+        for (i = 0; i < alphabetArr.length; i++) {
+          var data = await fetch(
+            "https://www.themealdb.com/api/json/v1/1/search.php?f=" +
+              alphabetArr[i],
+          );
+          var response = await data.json();
+          console.log(response);
+          if (response.meals != null) {
+            for (j = 0; j < response.meals.length; j++) {
+              document.getElementById("mainDiv").innerHTML =
+                document.getElementById("mainDiv").innerHTML +
+                `
                         <div class="card" style="width: 18rem">
                             <img
                             src=${response.meals[j].strMealThumb}
@@ -140,8 +198,10 @@
                                     data-bs-target="#${response.meals[j].idMeal}"
                                     >View Recipe Details</a>
                             </div>
-                        </div>`
-                        document.body.innerHTML = document.body.innerHTML + `
+                        </div>`;
+              document.body.innerHTML =
+                document.body.innerHTML +
+                `
                         <div class="modal modal-xl fade" id=${response.meals[j].idMeal} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -159,30 +219,26 @@
                                 </div>
                             </div>
                         </div>
-                        `
-                        var obj = {
-                            "id" : response.meals[j].idMeal,
-                            "thumbnail" : response.meals[j].strMealThumb,
-                            "mealName" : response.meals[j].strMeal,
-                            "category" : response.meals[j].strCategory,
-                            "area" : response.meals[j].strArea,
-                            "instructions" : response.meals[j].strInstructions,
-                            "youtubeVideo" : response.meals[j].strYoutube
-                        }
+                        `;
+              var obj = {
+                id: response.meals[j].idMeal,
+                thumbnail: response.meals[j].strMealThumb,
+                mealName: response.meals[j].strMeal,
+                category: response.meals[j].strCategory,
+                area: response.meals[j].strArea,
+                instructions: response.meals[j].strInstructions,
+                youtubeVideo: response.meals[j].strYoutube,
+              };
 
-                        var storedArr = [[]]
-                        if(localStorage.getItem("allRecipes")!=null){
-                            storedArr = JSON.parse(localStorage.getItem("allRecipes"))
-                        }
-
-                        storedArr[i][j]= obj
-                        localStorage.setItem("allRecipes",JSON.stringify(storedArr))
-                        
-                    }
-                }
+              if (localStorage.getItem("allRecipes") != null) {
+                mainArr = JSON.parse(localStorage.getItem("allRecipes"));
+              }
+              mainArr[i].push(obj);
+              localStorage.setItem("allRecipes", JSON.stringify(mainArr));
             }
-            
-        </script>
-</body>
-
+          }
+        }
+      }
+    </script>
+  </body>
 </html>
