@@ -48,7 +48,7 @@
     >
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasScrollingLabel">
-          Offcanvas with body scrolling
+          Filter on the basis of these categories
         </h5>
         <button
           type="button"
@@ -289,8 +289,8 @@
                       var htmlRes = `<p>Select the categories.</p>`
                       for(i=0;i<categoriesArray.length;i++){
                         htmlRes = htmlRes + `<div class="form-check">
-                            <input class="form-check-input-warning" type="radio" name="radioDefault" id="radioDefault1">
-                            <label class="form-check-label-warning" for="radioDefault1">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
+                            <label class="form-check-label" for="radioDefault1">
                                 ${categoriesArray[i].strCategory}
                             </label>
                         </div>`
@@ -299,6 +299,11 @@
                       document.getElementById("categoryList").innerHTML = htmlRes
 
 
+              }
+
+              function categoryFilter(category){
+                    var filteredFoods = []
+                    var storedFoods = JSON.parse(localStorage.getItem("allRecipes"))
               }
     </script>
   </body>
